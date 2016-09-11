@@ -12,7 +12,12 @@ class CategoriesNiceActions extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('categories_nice_actions', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
+            $table->integer('category_id');
+            $table->integer('nice_action_id');
+        });
     }
 
     /**
@@ -22,6 +27,6 @@ class CategoriesNiceActions extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('categories_nice_actions');
     }
 }

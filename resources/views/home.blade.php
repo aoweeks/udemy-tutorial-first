@@ -30,7 +30,11 @@
         <br>
         <ul>
             @foreach ($logged_actions->all() as $logged_action)
-                <li>{{ $logged_action->nice_action->name }}: {{ $logged_action->created_at }}</li>
+                <li>{{ $logged_action->nice_action->name }}: {{ $logged_action->created_at }}
+                    @foreach ($logged_action->nice_action->categories as $category)
+                        {{ $category->name }}
+                    @endforeach
+                </li>
             @endforeach
         </ul>
     </div>
