@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use \Illuminate\Http\Request;
 
 use App\NiceAction;
+use App\NiceActionLog;
 
 class NiceActionController extends Controller
 {
@@ -14,8 +15,9 @@ class NiceActionController extends Controller
     {
         
         $actions = NiceAction::all();
+        $logged_actions = NiceActionLog::all();
         
-        return view('home', ['actions' => $actions]);
+        return view('home', ['actions' => $actions, 'logged_actions' => $logged_actions]);
     }
     
     public function getNiceAction($action, $name = null)
@@ -23,16 +25,33 @@ class NiceActionController extends Controller
         if($name === null){
             $name = 'you';
         }
+        
+        $nice_action = NiceAction::where('name', ucfirst(strtolower($action)))->first();
+        $nice_action_log = new NiceActionLog();
+        
+        //dd($action, $nice_action, $nice_action_log);
+        
+        $nice_action->logged_actions()->save($nice_action_log);
+        
         return view('actions.nice', ['action' => $action, 'name' => $name]);
     }
     
-    public function postNiceAction(Request $request)
+    public function postInsertNiceAction(Request $request)
     {
         $this->validate($request, [
-            'action' => 'required',
-            'name' => 'required|alpha'
+            'name' => 'required|alpha|unique:nice_actions,name',
+            'niceness' => 'required|numeric'
         ]);
-        return view('actions.nice', ['action' => $request['action'], 'name' => $this->transformName($request['name'])]);
+        
+        $action = new NiceAction();
+        $action->name = ucfirst(strtolower($request['name']));
+        $action->niceness = $request['niceness'];
+        $action->save();
+        
+        
+        $actions = NiceAction::all();
+        
+        return redirect()->route('home', ['actions' => $actions]);
 
     }
     

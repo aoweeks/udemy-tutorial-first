@@ -16,17 +16,22 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('benice') }}" method="POST">
+        <form action="{{ route('add_action') }}" method="POST">
             {{ csrf_field() }}
-            <label for="select-action">I want to...</label>
-            <select id="select-action" name="action">
-                
-                @foreach ($actions->all() as $action)
-                        <option value="{{ strtolower($action->name) }}">{{ $action->name }}</option>
-                @endforeach
-            </select>
+            <label for="name">Name:</label>
             <input type="text" name="name"/>
+            
+            <label for="niceness">Niceness:</label>
+            <input type="text" name="niceness"/>
             <button type="submit">Do a nice action!</button>
         </form>
+        <br>
+        <br>
+        <br>
+        <ul>
+            @foreach ($logged_actions->all() as $logged_action)
+                <li>{{ $logged_action->nice_action->name }}: {{ $logged_action->created_at }}</li>
+            @endforeach
+        </ul>
     </div>
 @endsection

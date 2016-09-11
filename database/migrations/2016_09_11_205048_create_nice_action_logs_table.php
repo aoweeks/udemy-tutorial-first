@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNiceActionsTable extends Migration
+class CreateNiceActionLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,10 @@ class CreateNiceActionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('nice_actions', function (Blueprint $table) {
+        Schema::create('nice_action_logs', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->string('name')->unique();
-            $table->integer('niceness');
+            $table->integer('nice_action_id');
         });
     }
 
@@ -27,6 +26,6 @@ class CreateNiceActionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('nice_actions');
+        Schema::drop('nice_action_logs');
     }
 }
