@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlite'),
+    'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -47,9 +47,10 @@ return [
     'connections' => [
 
         'sqlite' => [
-            'driver' => 'sqlite',
+            'driver'   => 'sqlite',
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
-            'prefix' => '',
+            'prefix'   => '',
+            'exec'     => 'PRAGMA foreign_keys = ON;',  //enable delete cascade
         ],
 
         'mysql' => [

@@ -6,6 +6,7 @@ use \Illuminate\Http\Request;
 
 use App\NiceAction;
 use App\NiceActionLog;
+use DB;
 
 class NiceActionController extends Controller
 {
@@ -15,6 +16,9 @@ class NiceActionController extends Controller
     {
         
         $actions = NiceAction::all();
+        // $query = DB::table('nice_action_logs')
+        //             ->join('nice_actions', 'nice_actions_logs.nice_action_id', '=', 'nice_actions.id')->get();
+        
         $logged_actions = NiceActionLog::all();
         
         return view('home', ['actions' => $actions, 'logged_actions' => $logged_actions]);
