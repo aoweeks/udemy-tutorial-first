@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="centered">
-        @foreach ($actions->all() as $action)
+        @foreach ($actions as $action)
             <a href="{{ route('niceaction', ['action' => strtolower($action->name)]) }}">{{ $action->name }}</a>
         @endforeach
         <br>
@@ -37,5 +37,6 @@
                 </li>
             @endforeach
         </ul>
+        {{ dd($db) }}
     </div>
 @endsection
