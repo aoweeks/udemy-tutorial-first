@@ -54,6 +54,11 @@ class NiceActionController extends Controller
         
         $actions = NiceAction::all();
         
+        if($request->ajax())
+        {
+            return response()->json();
+        }
+        
         return redirect()->route('home', ['actions' => $actions]);
 
     }
