@@ -16,22 +16,11 @@ class NiceActionController extends Controller
     {
         
         $actions = NiceAction::orderBy('niceness', 'desc')->get();
-        $query = DB::table('nice_action_logs')
-                 ->join('nice_actions', 'nice_action_logs.nice_action_id', '=', 'nice_actions.id')
-                 ->count();
-                 
-        $logged_actions = NiceActionLog::all();
-            
-            // whereHas('nice_action', function($query){
-            //     $query->where('name', '=', 'Kiss');
-            // })->get();
-            
-        $nice_action = NiceAction::where('name', 'Hug')->first();
-        $nice_action_log = new NiceActionLog(); 
-        $nice_action->logged_actions()->save($nice_action_log);
+     
+        $logged_actions = NiceActionLog::paginate(5);
 
         
-        return view('home', ['actions' => $actions, 'logged_actions' => $logged_actions, 'db' => $query]);
+        return view('home', ['actions' => $actions, 'logged_actions' => $logged_actions]);
     }
     
     public function getNiceAction($action, $name = null)
