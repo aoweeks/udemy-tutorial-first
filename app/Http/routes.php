@@ -14,3 +14,9 @@
 Route::get('/', function(){
     return view('index');
 });
+
+
+Route::post('/new', [
+    'uses' => 'QuoteController@postQuote',
+    'as' => 'create']
+);
